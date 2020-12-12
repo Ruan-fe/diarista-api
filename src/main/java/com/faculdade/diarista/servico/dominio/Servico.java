@@ -3,6 +3,7 @@ package com.faculdade.diarista.servico.dominio;
 
 import com.faculdade.diarista.comum.enums.CategoriaServico;
 import com.faculdade.diarista.usuario.dominio.Usuario;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "servico")
@@ -42,5 +44,14 @@ public class Servico {
 
     @NotNull
     private String disponibilidade;
+
+    @NotNull
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate dataAbertura;
+
+    @PrePersist
+    public void prePersist(){
+        setDataAbertura(LocalDate.now());
+    }
 
 }

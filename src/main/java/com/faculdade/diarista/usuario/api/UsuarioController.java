@@ -20,7 +20,7 @@ public class UsuarioController {
     private final UsuarioRepository usuarioRepository;
 
     @PostMapping
-    ResponseEntity<UsuarioDTO> cadastrarUsuario(@RequestBody @Valid UsuarioForm form, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<UsuarioDTO> cadastrarUsuario(@RequestBody @Valid UsuarioForm form, UriComponentsBuilder uriBuilder){
         Usuario usuario = form.converter();
         usuarioRepository.save(usuario);
         URI uri = uriBuilder.path("/api/v1/usuario/{id}").buildAndExpand(usuario.getId()).toUri();

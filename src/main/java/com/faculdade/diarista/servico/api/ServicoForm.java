@@ -33,7 +33,7 @@ public class ServicoForm {
                 .orElseThrow(()->
                         new ResponseStatusException(HttpStatus.NOT_FOUND,"Usuario não encontrado"));
 
-        return new Servico(null,titulo,descricao,usuario,categoriaServico,status,disponibilidade);
+        return new Servico(null,titulo,descricao,usuario,categoriaServico,status,disponibilidade,null);
     }
 
 }

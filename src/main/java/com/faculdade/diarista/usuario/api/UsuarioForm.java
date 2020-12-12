@@ -20,6 +20,7 @@ public class UsuarioForm {
     @NotNull
     @Email
     private String email;
+    private String senha;
     private String telefone;
     @NotNull
     private String celular;
@@ -37,6 +38,6 @@ public class UsuarioForm {
 
 
     public Usuario converter(){
-        return new Usuario(null,nome,cpf,email,telefone,celular,logradouro,cidade,estado,cep,pais);
+        return new Usuario(null,nome,cpf,email,senha,telefone,celular,logradouro,cidade,estado,cep,pais);
     }
 }

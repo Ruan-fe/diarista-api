@@ -35,6 +35,9 @@ public class Usuario {
     @Column(unique = true)
     private String email;
 
+    @NotNull
+    private String senha;
+
     private String telefone;
 
     @NotNull
