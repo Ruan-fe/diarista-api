@@ -40,7 +40,7 @@ public class Servico {
     private CategoriaServico categoriaServico;
 
     @NotNull
-    private Boolean status;
+    private Boolean ativo;
 
     @NotNull
     private String disponibilidade;

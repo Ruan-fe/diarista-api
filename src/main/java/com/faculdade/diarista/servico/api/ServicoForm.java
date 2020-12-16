@@ -23,7 +23,7 @@ public class ServicoForm {
     @NotNull
     private CategoriaServico categoriaServico;
     @NotNull
-    private Boolean status;
+    private Boolean ativo;
     @NotNull
     private String disponibilidade;
 
@@ -33,7 +33,7 @@ public class ServicoForm {
                 .orElseThrow(()->
                         new ResponseStatusException(HttpStatus.NOT_FOUND,"Usuario não encontrado"));
 
-        return new Servico(null,titulo,descricao,usuario,categoriaServico,status,disponibilidade,null);
+        return new Servico(null,titulo,descricao,usuario,categoriaServico,ativo,disponibilidade,null);
     }
 
 }

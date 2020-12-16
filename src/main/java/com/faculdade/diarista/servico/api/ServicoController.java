@@ -6,8 +6,10 @@ import com.faculdade.diarista.usuario.dominio.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -37,4 +39,15 @@ public class ServicoController {
         return ResponseEntity.ok(ServicoDTO
                 .converter(servicos));
     }
+
+    @PutMapping("/{idServico}")
+    public ResponseEntity<ServicoDTO> atualizarAtivo(@PathVariable Integer idServico,
+                                                     @RequestBody @Valid EdicaoServicoForm form){
+        Servico servico = servicoRepository.findById(idServico)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Serviço não encontrado"));
+        servico.setAtivo(form.getAtivo());
+        return ResponseEntity.ok(new ServicoDTO(servicoRepository.save(servico)));
+    }
+
+
 }

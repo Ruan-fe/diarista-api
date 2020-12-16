@@ -21,7 +21,7 @@ public class ServicoDTO {
     private String descricao;
     private Integer usuario;
     private String categoriaServico;
-    private Boolean status;
+    private Boolean ativo;
     private String disponibilidade;
     private LocalDate dataAbertura;
 
@@ -33,7 +33,7 @@ public class ServicoDTO {
         descricao = servico.getDescricao();
         usuario = servico.getUsuario().getId();
         categoriaServico = servico.getCategoriaServico().getDescricao();
-        status = servico.getStatus();
+        ativo = servico.getAtivo();
         disponibilidade = servico.getDisponibilidade();
         dataAbertura = servico.getDataAbertura();
 

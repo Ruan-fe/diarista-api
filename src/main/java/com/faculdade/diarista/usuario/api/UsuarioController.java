@@ -1,7 +1,9 @@
 package com.faculdade.diarista.usuario.api;
 
+import com.faculdade.diarista.servico.api.ServicoDTO;
 import com.faculdade.diarista.usuario.dominio.Usuario;
 import com.faculdade.diarista.usuario.dominio.UsuarioRepository;
+import io.swagger.models.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,8 +35,15 @@ public class UsuarioController {
 
         return ResponseEntity.ok(UsuarioDTO
                 .converter(usuarioRepository.findByEmail(email)));
-
     }
+
+    @PutMapping("/{idUsuario}")
+    public ResponseEntity<UsuarioDTO> editarUsuario(@PathVariable Integer idUsuario, @RequestBody @Valid EdicaoUsuarioForm form){
+        Usuario usuario = form.atualizar(idUsuario, usuarioRepository);
+        usuarioRepository.save(usuario);
+        return ResponseEntity.ok(new UsuarioDTO(usuario));
+    }
+
 
 
 }
