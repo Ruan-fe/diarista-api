@@ -1,39 +1,62 @@
 package com.faculdade.diarista.usuario.api;
 
 import com.faculdade.diarista.usuario.dominio.Usuario;
-import com.sun.istack.NotNull;
 import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
 
+import javax.persistence.Column;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 
 @Getter
-@Setter
 public class UsuarioForm {
 
-    @NotNull
+
+    @NotNull(message = "{campo.nome.obrigatorio}")
+    @NotBlank(message = "{campo.nome.obrigatorio}")
     private String nome;
-    @NotNull
-    @CPF
+
+    @NotNull(message = "{campo.cpf.obrigatorio}")
+    @CPF(message = "{campo.cpf.valido}")
     private String cpf;
-    @NotNull
-    @Email
+
+    @NotNull(message = "{campo.email.obrigatorio}")
+    @NotBlank(message = "{campo.email.obrigatorio}")
+    @Email(message = "{campo.email.valido}")
     private String email;
+
+    @NotNull(message = "{campo.senha.obrigatorio}")
+    @NotBlank(message = "{campo.senha.obrigatorio}")
     private String senha;
+
     private String telefone;
-    @NotNull
+
+    @NotNull(message = "{campo.celular.obrigatorio}")
+    @NotBlank(message = "{campo.celular.obrigatorio}")
     private String celular;
 
     //endereço
-    @NotNull
+    @NotNull(message = "{campo.logradouro.obrigatorio}")
+    @NotBlank(message = "{campo.logradouro.obrigatorio}")
     private String logradouro;
-    @NotNull
+
+    @NotNull(message = "{campo.cidade.obrigatorio}")
+    @NotBlank(message = "{campo.cidade.obrigatorio}")
     private String cidade;
-    @NotNull
+
+    @NotNull(message = "{campo.estado.obrigatorio}")
+    @NotBlank(message = "{campo.estado.obrigatorio}")
     private String estado;
-    @NotNull
+
+    @NotNull(message = "{campo.cep.obrigatorio}")
+    @NotBlank(message = "{campo.cep.obrigatorio}")
     private String cep;
+
+    @NotNull(message = "{campo.pais.obrigatorio}")
+    @NotBlank(message = "{campo.pais.obrigatorio}")
     private String pais;
 
 

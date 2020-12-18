@@ -1,9 +1,10 @@
 package com.faculdade.diarista.servico.api;
 
 import com.faculdade.diarista.servico.dominio.Servico;
-import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotNull;
 
 @Getter
 @NoArgsConstructor

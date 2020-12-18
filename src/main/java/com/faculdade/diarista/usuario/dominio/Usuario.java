@@ -1,6 +1,6 @@
 package com.faculdade.diarista.usuario.dominio;
 
-import com.sun.istack.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +9,8 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @NoArgsConstructor
@@ -23,6 +25,7 @@ public class Usuario {
     private Integer id;
 
     @NotNull
+    @NotEmpty
     private String nome;
 
     @NotNull

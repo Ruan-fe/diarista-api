@@ -4,27 +4,37 @@ import com.faculdade.diarista.comum.enums.CategoriaServico;
 import com.faculdade.diarista.servico.dominio.Servico;
 import com.faculdade.diarista.usuario.dominio.Usuario;
 import com.faculdade.diarista.usuario.dominio.UsuarioRepository;
-import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 @Getter
 @Setter
 public class ServicoForm {
 
-    @NotNull
+    @NotNull(message = "{campo.titulo.obrigatorio}")
+    @NotEmpty(message = "{campo.titulo.obrigatorio}")
     private String titulo;
-    @NotNull
+
+    @NotNull(message = "{campo.descricao.obrigatorio}")
+    @NotEmpty(message = "{campo.descricao.obrigatorio}")
     private String descricao;
+
     @NotNull
     private Integer usuario;
+
     @NotNull
     private CategoriaServico categoriaServico;
-    @NotNull
+
+    @NotNull(message = "{campo.ativo.obrigatorio}")
     private Boolean ativo;
-    @NotNull
+
+    @NotNull(message = "{campo.disponibilidade.obrigatorio}")
+    @NotEmpty(message = "{campo.disponibilidade.obrigatorio}")
     private String disponibilidade;
 
     public Servico converter(UsuarioRepository usuarioRepository){
