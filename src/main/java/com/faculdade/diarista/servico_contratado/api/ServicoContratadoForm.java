@@ -9,6 +9,8 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
+
 @Getter
 public class ServicoContratadoForm {
 
@@ -27,6 +29,6 @@ public class ServicoContratadoForm {
                         new ResponseStatusException(HttpStatus.NOT_FOUND,"Usuario não encontrado"));
 
 
-        return new ServicoContratado(null, usuarioContratante, servico );
+        return new ServicoContratado(null, usuarioContratante, servico, null );
     }
 }

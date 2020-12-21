@@ -62,4 +62,5 @@ public class Usuario{
     private String cep;
 
     private String pais;
+
 }

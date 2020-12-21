@@ -1,15 +1,16 @@
 package com.faculdade.diarista.servico_contratado.api;
 
+import com.faculdade.diarista.servico.api.ServicoDTO;
+import com.faculdade.diarista.servico.dominio.Servico;
 import com.faculdade.diarista.servico.dominio.ServicoRepository;
 import com.faculdade.diarista.servico_contratado.dominio.ServicoContratado;
 import com.faculdade.diarista.servico_contratado.dominio.ServicoContratadoRepository;
 import com.faculdade.diarista.usuario.dominio.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -32,7 +33,11 @@ public class ServicoContratadoController {
         return ResponseEntity.created(uri).body(new ServicoContratadoDTO(servicoContratado));
     }
 
+    @GetMapping
+    public ResponseEntity<Page<ServicoContratadoDTO>> buscarPorPagina(Pageable paginacao){
+        Page<ServicoContratado> servicoContratados = servicoContratadoRepository.findAll(paginacao);
 
-
+        return ResponseEntity.ok(ServicoContratadoDTO.converter(servicoContratados));
+    }
 
 }

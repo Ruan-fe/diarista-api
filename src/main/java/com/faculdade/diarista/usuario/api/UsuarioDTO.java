@@ -41,6 +41,7 @@ public class UsuarioDTO {
         estado = usuario.getEstado();
         cep = usuario.getCep();
         pais = usuario.getPais();
+
     }
 
     public static List<UsuarioDTO> converter(List<Usuario> listUsuarios) {
