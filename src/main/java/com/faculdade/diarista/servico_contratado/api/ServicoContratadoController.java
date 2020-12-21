@@ -19,6 +19,7 @@ import java.net.URI;
 @RestController
 @RequestMapping("/api/v1/servico-contratado")
 @RequiredArgsConstructor
+@CrossOrigin
 public class ServicoContratadoController {
 
     private final ServicoContratadoRepository servicoContratadoRepository;
