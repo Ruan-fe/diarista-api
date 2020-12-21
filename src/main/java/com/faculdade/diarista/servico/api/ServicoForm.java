@@ -13,7 +13,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Getter
-@Setter
 public class ServicoForm {
 
     @NotNull(message = "{campo.titulo.obrigatorio}")

@@ -1,6 +1,7 @@
 package com.faculdade.diarista.servico.api;
 
 import com.faculdade.diarista.servico.dominio.Servico;
+import com.faculdade.diarista.usuario.dominio.Usuario;
 import lombok.*;
 import org.springframework.data.domain.Page;
 
@@ -13,13 +14,12 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder
 public class ServicoDTO {
 
     private Integer id;
     private String titulo;
     private String descricao;
-    private Integer usuario;
+    private Usuario usuario;
     private String categoriaServico;
     private Boolean ativo;
     private String disponibilidade;
@@ -31,7 +31,7 @@ public class ServicoDTO {
         id = servico.getId();
         titulo = servico.getTitulo();
         descricao = servico.getDescricao();
-        usuario = servico.getUsuario().getId();
+        usuario = servico.getUsuario();
         categoriaServico = servico.getCategoriaServico().getDescricao();
         ativo = servico.getAtivo();
         disponibilidade = servico.getDisponibilidade();

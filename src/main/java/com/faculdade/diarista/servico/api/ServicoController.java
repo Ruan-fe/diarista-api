@@ -26,7 +26,7 @@ public class ServicoController {
 
 
     @PostMapping
-    public ResponseEntity<ServicoDTO> cadastrarUsuario(@RequestBody @Valid ServicoForm form, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<ServicoDTO> cadastrarServico(@RequestBody @Valid ServicoForm form, UriComponentsBuilder uriBuilder){
         Servico servico = form.converter(usuarioRepository);
         servicoRepository.save(servico);
         URI uri = uriBuilder.path("/api/v1/servico/{id}").buildAndExpand(servico.getId()).toUri();
@@ -36,6 +36,7 @@ public class ServicoController {
     @GetMapping
     public ResponseEntity<Page<ServicoDTO>> buscarPorPagina(Pageable paginacao) {
         Page<Servico> servicos = servicoRepository.findAll(paginacao);
+
         return ResponseEntity.ok(ServicoDTO
                 .converter(servicos));
     }

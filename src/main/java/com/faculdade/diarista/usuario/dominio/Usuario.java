@@ -11,6 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Entity
 @NoArgsConstructor
@@ -18,7 +19,8 @@ import javax.validation.constraints.NotNull;
 @Table(name = "usuario")
 @Getter
 @Setter
-public class Usuario {
+public class Usuario{
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

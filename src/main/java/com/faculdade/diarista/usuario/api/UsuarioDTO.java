@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder
 public class UsuarioDTO {
 
     private Integer id;

@@ -5,6 +5,7 @@ import com.faculdade.diarista.comum.enums.CategoriaServico;
 import com.faculdade.diarista.usuario.dominio.Usuario;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
@@ -32,7 +34,7 @@ public class Servico {
     @NotNull
     private String descricao;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @NotNull
     private Usuario usuario;
 
