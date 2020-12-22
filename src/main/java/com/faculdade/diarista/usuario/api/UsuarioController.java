@@ -5,6 +5,7 @@ import com.faculdade.diarista.usuario.dominio.Usuario;
 import com.faculdade.diarista.usuario.dominio.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -15,10 +16,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/usuario")
 @RequiredArgsConstructor
-@CrossOrigin
 public class UsuarioController {
 
     private final UsuarioRepository usuarioRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping
     public ResponseEntity<UsuarioDTO> cadastrarUsuario(@RequestBody @Valid UsuarioForm form, UriComponentsBuilder uriBuilder){
@@ -29,7 +30,7 @@ public class UsuarioController {
         if (usuarioRepository.existsByCpf(form.getCpf()))
             throw new RecursoDuplicadoException("CPF", form.getCpf());
 
-        Usuario usuario = form.converter();
+        Usuario usuario = form.converter(bCryptPasswordEncoder);
         usuarioRepository.save(usuario);
 
         URI uri = uriBuilder.path("/api/v1/usuario/{id}").buildAndExpand(usuario.getId()).toUri();
