@@ -1,6 +1,6 @@
 package com.faculdade.diarista.usuario.api;
 
-import com.faculdade.diarista.comum.enums.Perfil;
+
 import com.faculdade.diarista.usuario.dominio.Usuario;
 import lombok.Getter;
 import org.hibernate.validator.constraints.br.CPF;
@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 
 @Getter
@@ -31,8 +32,6 @@ public class UsuarioForm {
     @NotNull(message = "{campo.senha.obrigatorio}")
     @NotBlank(message = "{campo.senha.obrigatorio}")
     private String senha;
-
-    private Perfil perfil;
 
     private String telefone;
 
@@ -65,7 +64,7 @@ public class UsuarioForm {
 
     public Usuario converter(BCryptPasswordEncoder bCryptPasswordEncoder){
 
-        return new Usuario(null,nome,cpf,email,bCryptPasswordEncoder.encode(senha),perfil.USUARIO,telefone,celular,logradouro,cidade,estado,cep,pais);
+        return new Usuario(null,nome,cpf,email,bCryptPasswordEncoder.encode(senha),telefone,celular,logradouro,cidade,estado,cep,pais);
 
     }
 }

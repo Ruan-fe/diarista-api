@@ -20,6 +20,16 @@ public enum Perfil {
         return descricao;
     }
 
-    public void add(Integer codigo) {
+
+    public static Perfil toEnum(Integer cod){
+        if(cod == null){
+            return null;
+        }
+        for(Perfil x : Perfil.values()){
+            if(cod.equals(x.getCodigo())){
+                return x;
+            }
+        }
+        throw new IllegalArgumentException("id inválido" + cod);
     }
 }

@@ -16,7 +16,6 @@ public class UsuarioDTO {
     private String nome;
     private String cpf;
     private String email;
-    private String perfil;
     private String telefone;
     private String celular;
 
@@ -32,7 +31,6 @@ public class UsuarioDTO {
         nome = usuario.getNome();
         cpf = usuario.getCpf();
         email = usuario.getEmail();
-        perfil = usuario.getPerfil().getDescricao();
 
         telefone = usuario.getTelefone();
         celular = usuario.getCelular();

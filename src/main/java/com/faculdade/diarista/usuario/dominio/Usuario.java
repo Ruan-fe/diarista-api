@@ -1,7 +1,6 @@
 package com.faculdade.diarista.usuario.dominio;
 
 
-import com.faculdade.diarista.comum.enums.Perfil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,9 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+
 
 @Entity
 @NoArgsConstructor
@@ -46,8 +43,6 @@ public class Usuario{
     @NotNull
     private String senha;
 
-    private Perfil perfil;
-
     private String telefone;
 
     @NotNull
@@ -68,9 +63,5 @@ public class Usuario{
 
     private String pais;
 
-
-    public void addPerfil(Perfil perfil){
-        perfil.add(perfil.getCodigo());
-    }
 
 }

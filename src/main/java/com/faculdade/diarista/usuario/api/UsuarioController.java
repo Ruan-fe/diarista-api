@@ -38,11 +38,11 @@ public class UsuarioController {
     }
 
 
-    @GetMapping
+    /*@GetMapping
     public ResponseEntity<List<UsuarioDTO>> buscarPorEmail(@RequestParam(required = true) String email){
         return ResponseEntity.ok(UsuarioDTO
                 .converter(usuarioRepository.findByEmail(email)));
-    }
+    }*/
 
     @PutMapping("/{idUsuario}")
     public ResponseEntity<UsuarioDTO> editarUsuario(@PathVariable Integer idUsuario, @RequestBody @Valid EdicaoUsuarioForm form){
