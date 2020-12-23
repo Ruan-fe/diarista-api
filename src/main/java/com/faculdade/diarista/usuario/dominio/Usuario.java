@@ -1,6 +1,7 @@
 package com.faculdade.diarista.usuario.dominio;
 
 
+import com.faculdade.diarista.comum.enums.Perfil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,14 +12,17 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "usuario")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Usuario{
 
 
@@ -39,6 +43,10 @@ public class Usuario{
     @Email
     @Column(unique = true)
     private String email;
+
+    @ElementCollection(fetch=FetchType.EAGER)
+    @CollectionTable(name="PERFIS")
+    private Set<Integer> perfis = new HashSet<>();
 
     @NotNull
     private String senha;
@@ -63,5 +71,14 @@ public class Usuario{
 
     private String pais;
 
+
+
+    public Set<Perfil> getPerfis() {
+        return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
+    }
+
+    public void addPerfil(Perfil perfil) {
+        perfis.add(perfil.getCod());
+    }
 
 }
