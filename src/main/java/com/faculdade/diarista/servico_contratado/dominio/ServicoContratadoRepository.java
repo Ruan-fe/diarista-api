@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ServicoContratadoRepository extends JpaRepository<ServicoContratado,Integer> {
     Page<ServicoContratado> findByUsuarioContratante(Pageable paginacao, Usuario usuarioContratante);
+    Page<ServicoContratado> findByServicoUsuario(Pageable paginacao, Usuario usuarioPrestador);
 }

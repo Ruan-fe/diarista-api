@@ -29,7 +29,7 @@ public class ServicoContratadoController {
     private final UsuarioRepository usuarioRepository;
 
     @PostMapping
-    public ResponseEntity<ServicoContratadoDTO> cadastrarServicoContratado(@RequestBody @Valid ServicoContratadoForm form, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<ServicoContratadoDTO> cadastrarServicoContratado(@RequestBody @Valid ServicoContratadoForm form, UriComponentsBuilder uriBuilder) {
         ServicoContratado servicoContratado = form.converter(servicoRepository, usuarioRepository);
         servicoContratadoRepository.save(servicoContratado);
         URI uri = uriBuilder.path("/api/v1/servico/{id}").buildAndExpand(servicoContratado.getId()).toUri();
@@ -37,17 +37,24 @@ public class ServicoContratadoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ServicoContratadoDTO>> buscarPorPagina(Pageable paginacao){
+    public ResponseEntity<Page<ServicoContratadoDTO>> buscarPorPagina(Pageable paginacao, @RequestParam(required = false) Integer idPrestador) {
 
-        UserSS usuario = UserService.authenticated();
+        if (idPrestador == null) {
+            UserSS usuario = UserService.authenticated();
+            Usuario usuarioContratante = usuarioRepository.findById(usuario.getId())
+                    .orElseThrow(() ->
+                            new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario não encontrado"));
 
-        Usuario usuarioContratante = usuarioRepository.findById(usuario.getId())
-                .orElseThrow(()->
-                        new ResponseStatusException(HttpStatus.NOT_FOUND,"Usuario não encontrado"));
 
-        Page<ServicoContratado> servicoContratados = servicoContratadoRepository.findByUsuarioContratante(paginacao,usuarioContratante);
-
-        return ResponseEntity.ok(ServicoContratadoDTO.converter(servicoContratados));
+            Page<ServicoContratado> servicoContratados = servicoContratadoRepository.findByUsuarioContratante(paginacao, usuarioContratante);
+            return ResponseEntity.ok(ServicoContratadoDTO.converter(servicoContratados));
+        } else {
+            Usuario usuarioPrestador = usuarioRepository.findById(idPrestador)
+                    .orElseThrow(() ->
+                            new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario não encontrado"));
+            Page<ServicoContratado> servicoPrestado = servicoContratadoRepository.findByServicoUsuario(paginacao, usuarioPrestador);
+            return ResponseEntity.ok(ServicoContratadoDTO.converter(servicoPrestado));
+        }
     }
 
 }
