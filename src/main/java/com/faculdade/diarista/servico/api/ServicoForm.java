@@ -1,11 +1,12 @@
 package com.faculdade.diarista.servico.api;
 
 import com.faculdade.diarista.comum.enums.CategoriaServico;
+import com.faculdade.diarista.comum.security.UserSS;
+import com.faculdade.diarista.comum.service.UserService;
 import com.faculdade.diarista.servico.dominio.Servico;
 import com.faculdade.diarista.usuario.dominio.Usuario;
 import com.faculdade.diarista.usuario.dominio.UsuarioRepository;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -23,7 +24,6 @@ public class ServicoForm {
     @NotEmpty(message = "{campo.descricao.obrigatorio}")
     private String descricao;
 
-    @NotNull
     private Integer usuario;
 
     @NotNull
@@ -37,10 +37,12 @@ public class ServicoForm {
     private String disponibilidade;
 
     public Servico converter(UsuarioRepository usuarioRepository){
-        Usuario usuario = usuarioRepository
-                .findById(this.usuario)
+
+        UserSS usuarioLogado = UserService.authenticated();
+        Usuario usuario = usuarioRepository.findById(usuarioLogado.getId())
                 .orElseThrow(()->
                         new ResponseStatusException(HttpStatus.NOT_FOUND,"Usuario não encontrado"));
+
 
         return new Servico(null,titulo,descricao,usuario,categoriaServico,ativo,disponibilidade,null);
     }

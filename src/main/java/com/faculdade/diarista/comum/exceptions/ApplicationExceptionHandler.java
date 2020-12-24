@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -24,5 +25,23 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 
         return new ResponseEntity(erro,HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(AuthorizationException.class)
+    public ResponseEntity<StandardError> authorization(AuthorizationException e, HttpServletRequest request) {
+
+        StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.FORBIDDEN.value(), "Acesso negado", e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
+    }
+
+    @ExceptionHandler(UsuarioNaoPodeContratarOMesmoServicoException.class)
+    public ResponseEntity hadleException(UsuarioNaoPodeContratarOMesmoServicoException e){
+
+        DefaultError erro = new DefaultError(HttpStatus.BAD_REQUEST.toString(), e.toString());
+
+        return new ResponseEntity(erro,HttpStatus.BAD_REQUEST);
+    }
+
+
+
 
 }

@@ -1,14 +1,17 @@
 package com.faculdade.diarista.usuario.api;
 
+
+import com.faculdade.diarista.comum.enums.Perfil;
 import com.faculdade.diarista.usuario.dominio.Usuario;
 import lombok.Getter;
 import org.hibernate.validator.constraints.br.CPF;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.persistence.Column;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Getter
@@ -27,6 +30,8 @@ public class UsuarioForm {
     @NotBlank(message = "{campo.email.obrigatorio}")
     @Email(message = "{campo.email.valido}")
     private String email;
+
+    private Set<Integer> perfis = new HashSet<>();
 
     @NotNull(message = "{campo.senha.obrigatorio}")
     @NotBlank(message = "{campo.senha.obrigatorio}")
@@ -59,8 +64,17 @@ public class UsuarioForm {
     @NotBlank(message = "{campo.pais.obrigatorio}")
     private String pais;
 
+    public UsuarioForm() {
+        addPerfil(Perfil.USUARIO);
+    }
+    public void addPerfil(Perfil perfil) {
+        perfis.add(perfil.getCod());
+    }
 
-    public Usuario converter(){
-        return new Usuario(null,nome,cpf,email,senha,telefone,celular,logradouro,cidade,estado,cep,pais);
+
+    public Usuario converter(BCryptPasswordEncoder bCryptPasswordEncoder){
+
+        return new Usuario(null,nome,cpf,email,perfis,bCryptPasswordEncoder.encode(senha),telefone,celular,logradouro,cidade,estado,cep,pais);
+
     }
 }
