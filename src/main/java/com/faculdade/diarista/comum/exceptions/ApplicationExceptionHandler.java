@@ -33,4 +33,15 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
     }
 
+    @ExceptionHandler(UsuarioNaoPodeContratarOMesmoServicoException.class)
+    public ResponseEntity hadleException(UsuarioNaoPodeContratarOMesmoServicoException e){
+
+        DefaultError erro = new DefaultError(HttpStatus.BAD_REQUEST.toString(), e.toString());
+
+        return new ResponseEntity(erro,HttpStatus.BAD_REQUEST);
+    }
+
+
+
+
 }

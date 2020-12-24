@@ -1,5 +1,8 @@
 package com.faculdade.diarista.servico_contratado.api;
 
+import com.faculdade.diarista.comum.exceptions.UsuarioNaoPodeContratarOMesmoServicoException;
+import com.faculdade.diarista.comum.security.UserSS;
+import com.faculdade.diarista.comum.service.UserService;
 import com.faculdade.diarista.servico.dominio.Servico;
 import com.faculdade.diarista.servico.dominio.ServicoRepository;
 import com.faculdade.diarista.servico_contratado.dominio.ServicoContratado;
@@ -9,7 +12,6 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
 
 @Getter
 public class ServicoContratadoForm {
@@ -24,7 +26,13 @@ public class ServicoContratadoForm {
                 .orElseThrow(()->
                         new ResponseStatusException(HttpStatus.NOT_FOUND,"Serviço não encontrado"));
 
-        Usuario usuarioContratante = usuarioRepository.findById(this.usuarioContratante)
+        UserSS usuario = UserService.authenticated();
+
+        if(usuario.getId() == servico.getUsuario().getId()){
+            throw new UsuarioNaoPodeContratarOMesmoServicoException(usuario.getUsername());
+        }
+
+        Usuario usuarioContratante = usuarioRepository.findById(usuario.getId())
                 .orElseThrow(()->
                         new ResponseStatusException(HttpStatus.NOT_FOUND,"Usuario não encontrado"));
 
