@@ -2,6 +2,7 @@ package com.faculdade.diarista.usuario.dominio;
 
 
 import com.faculdade.diarista.comum.enums.Perfil;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -49,6 +50,7 @@ public class Usuario{
     private Set<Integer> perfis = new HashSet<>();
 
     @NotNull
+    @JsonIgnore
     private String senha;
 
     private String telefone;

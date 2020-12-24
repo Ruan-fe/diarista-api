@@ -1,6 +1,10 @@
 package com.faculdade.diarista.usuario.api;
 
+import com.faculdade.diarista.comum.enums.Perfil;
+import com.faculdade.diarista.comum.exceptions.AuthorizationException;
 import com.faculdade.diarista.comum.exceptions.RecursoDuplicadoException;
+import com.faculdade.diarista.comum.security.UserSS;
+import com.faculdade.diarista.comum.service.UserService;
 import com.faculdade.diarista.usuario.dominio.Usuario;
 import com.faculdade.diarista.usuario.dominio.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,11 +42,17 @@ public class UsuarioController {
     }
 
 
-    /*@GetMapping
-    public ResponseEntity<List<UsuarioDTO>> buscarPorEmail(@RequestParam(required = true) String email){
-        return ResponseEntity.ok(UsuarioDTO
-                .converter(usuarioRepository.findByEmail(email)));
-    }*/
+    @GetMapping
+    public ResponseEntity<Usuario> buscarPorEmail(@RequestParam(required = true) String email){
+
+        UserSS user = UserService.authenticated();
+        if (user == null || !user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername())) {
+            throw new AuthorizationException("Acesso negado");
+        }
+
+        Usuario usuario = usuarioRepository.findByEmail(email);
+        return ResponseEntity.ok(usuario);
+    }
 
     @PutMapping("/{idUsuario}")
     public ResponseEntity<UsuarioDTO> editarUsuario(@PathVariable Integer idUsuario, @RequestBody @Valid EdicaoUsuarioForm form){
